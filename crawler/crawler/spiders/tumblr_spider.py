@@ -79,7 +79,7 @@ class Tumblr_Crawler(scrapy.Spider):
         pil_img =Image.open(BytesIO(image_request_result.content))
         width, height = pil_img.size
         max_size = [1024, 1024]
-        if width > 200 or height > 200:
+        if width > 1024 or height > 1024:
             pil_img.thumbnail(max_size)
 
         # 얼굴 검출을 위해서 PIL 이미지 객체를 opencv 이미지로 변환
