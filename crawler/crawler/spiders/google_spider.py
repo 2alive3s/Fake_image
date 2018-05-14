@@ -34,21 +34,21 @@ import os
 # 5. 얼굴이 있을 경우, 이미지 파일을 지정된 경로에 저장한다.
 
 class GoogleSpider(scrapy.Spider):
-    name = "GoogleSpider"
-    def __init__(self, keyword='', **kwargs):
+    name = "google"
+    def __init__(self, keyword='', dirname='',**kwargs):
         # 이미지를 저장할 기본 폴더, 자기 환경에 맞게끔 변경할 것
-        self.root_dir = '/Users/junny/Desktop/crawler/test/'
+        self.root_dir = 'collected_image/google/'
 
         # 구글 검색창에 입력할 키워드이며 한글과 영어 모두 가능
         # , 로 구분해서 여러 키워드 설정 가능
-        self.keyword_list=["아이유 셀카"]
+        self.keyword_list=[keyword]
 
         # 키워드 별로 이미지 저장할 디렉토리 명이며 영어여야 한다.
         # 특정 키워드 검색 결과 이미지를 저장할 폴더명을 설정하는 배열
         # 디렉토리 명 설정 시 영어 키워드는 그대로 사용
         # 한글 키워드일 시에는 영어로 변환한 뒤 +han 붙여줄 것 (ex. 다비치 -> davichi+han)
         # 키워드에 공백을 포함할 경우 + 로 치환해 줄 것 (ex. 커플 여행 -> couple+travel+han)
-        self.dirname_list=["iu_selfie"]
+        self.dirname_list=[dirname]
 
         # 얼굴 인식을 위해 필요한 opencv 모듈
         # 구글 드라이브 상에 haarcascade_frontalface_alt.xml 다운 받고 경로 지정
@@ -153,7 +153,7 @@ class GoogleSpider(scrapy.Spider):
 
         # 이미지를 저장할 폴더가 없을 경우 생성해준다.
         if not os.path.exists(file_path) :
-            os.mkdir(file_path)
+            os.makedirs(file_path)
 
         # 이미지를 지정된 경로에 저장한다.
         cv2.imwrite(full_path, cv_img)

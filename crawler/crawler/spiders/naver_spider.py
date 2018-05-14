@@ -42,12 +42,17 @@ ex) "문재인"
 
 class NewsUrlSpider(scrapy.Spider):
 
-    name = "imageCrawler"
-
+    name = "naver"
+    #생성자
+    def __init__(self, keyword='', dirname='', **kwargs):
+        super().__init__(**kwargs)
+        self.root_dir = 'collected_image/naver/'
+        self.keyword = keyword # 여기에서 검색 키워드를 변경하시면 됩니다.
+        self.dirname = dirname
+        self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
+        
     #가장 처음 실행되는 수집 함수
     def start_requests(self):
-
-        keyword = "문재인"  #입력 키워드
         num = str(30)  #몇개 이미지 뽑기를 원하는지...
 
         # 얼굴 인식을 위해 필요한 opencv 모듈
@@ -55,11 +60,10 @@ class NewsUrlSpider(scrapy.Spider):
         self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
 
         # 네이버 이미지 검색 URL 주소
-        naver_image_search_url = "https://s.search.naver.com/imagesearch/instant/search.naver?where=image§ion=image&rev=31&ssl=1&res_fr=0&res_to=0&face=0&color=0&ccl=0&ac=1&aq=0&spq=1&query='"+keyword+"'&nx_search_query='"+keyword+"'&nx_and_query=&nx_sub_query=&nx_search_hlquery=&nx_search_fasquery=&datetype=0&startdate=0&enddate=0&json_type=6&nlu_query={'timelineQuery':'"+keyword+"'}&start=0&display="+num+"&_callback=window.__jindo2_callback.__sauImageTabList"
+        naver_image_search_url = "https://s.search.naver.com/imagesearch/instant/search.naver?where=image§ion=image&rev=31&ssl=1&res_fr=0&res_to=0&face=0&color=0&ccl=0&ac=1&aq=0&spq=1&query='"+self.keyword+"'&nx_search_query='"+self.keyword+"'&nx_and_query=&nx_sub_query=&nx_search_hlquery=&nx_search_fasquery=&datetype=0&startdate=0&enddate=0&json_type=6&nlu_query={'timelineQuery':'"+self.keyword+"'}&start=0&display="+num+"&_callback=window.__jindo2_callback.__sauImageTabList"
         naver_image_search_url = str(naver_image_search_url)
 
         request = scrapy.Request(naver_image_search_url , self.url_extractor)
-        request.meta['keyword'] = keyword
         yield request
 
 
@@ -67,15 +71,12 @@ class NewsUrlSpider(scrapy.Spider):
     def url_extractor(self, response):
         #뉴스의 내용을 추출한다.
         item_content = response.xpath('//*').extract()[0]
-
-        keyword = response.meta['keyword']
-
         regex = re.compile("originalUrl.*?,")  #원본 이미지 URL 주소 추출
         result = regex.findall(item_content)
         print('*' * 100)
 
         for image_url in result:
-            decode_url = urllib.unquote(image_url).decode('utf8')
+            decode_url = urllib.parse.unquote(image_url)
             #url에서 불필요한 부분 제거
             regex_url = re.sub('originalUrl\\\\\":','',decode_url)
             regex_url = re.sub('\"','',regex_url)
@@ -84,7 +85,6 @@ class NewsUrlSpider(scrapy.Spider):
             print(regex_url)
 
             request = scrapy.Request(regex_url , self.set_photo)
-            request.meta['keyword'] = keyword
             yield request
 
 
@@ -92,7 +92,6 @@ class NewsUrlSpider(scrapy.Spider):
     #원본 URL에서 이미지 추출
     def set_photo(self, response):
 
-        keyword = response.meta['keyword']
         image_url = response.url
 
         print('*' * 100)
@@ -116,7 +115,7 @@ class NewsUrlSpider(scrapy.Spider):
         pil_img =Image.open(BytesIO(image_request_result.content))
         width, height = pil_img.size
         max_size = [1024, 1024]
-        if width > 200 or height > 200:
+        if width > 1024 or height > 1024:
             pil_img.thumbnail(max_size)
 
         # 얼굴 검출을 위해서 opencv 이미지로 변환
@@ -130,14 +129,16 @@ class NewsUrlSpider(scrapy.Spider):
 
         # 얼굴이 검출되지 않을 경우 함수를 종료한다.
         if len(faces)==0:
+            print("face fail")
             return
 
         # 얼굴이 포함된 이미지를 저장할 폴더명과 파일명을 설정한다.
-        file_path = "/home/lee/Downloads/image/"+keyword+"/"
-        full_path = file_path + 'naver_' + keyword + '_' + str(time.time()) + '.jpg'
+        file_path = 'collected_image/naver/' + self.dirname + '/'
+        full_path = file_path + 'naver_' + self.dirname + '_' + str(time.time()) + '.jpg'
 
         # 이미지를 저장할 폴더가 없을 경우 생성해준다.
         if not os.path.exists(file_path) :
-            os.mkdir(file_path)
-
+            os.makedirs(file_path)
+            
+        print("face ??")
         cv2.imwrite(full_path, cv_img)

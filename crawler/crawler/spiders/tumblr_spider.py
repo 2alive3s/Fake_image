@@ -15,6 +15,7 @@ import requests
 import time
 import cv2
 import numpy as np
+import os
 
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
@@ -30,9 +31,11 @@ class Tumblr_Crawler(scrapy.Spider):
     name = "tumblr"
     
     #생성자
-    def __init__(self):
-        self.keyword = 'selfie' # 여기에서 검색 키워드를 변경하시면 됩니다.
-        self.path = 'tumblr_'+ self.keyword + '_'
+    def __init__(self, keyword='', dirname='', **kwargs):
+        super().__init__(**kwargs)
+        self.root_dir = 'collected_image/tumblr/'
+        self.keyword = keyword # 여기에서 검색 키워드를 변경하시면 됩니다.
+        self.dirname = dirname
         self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
 
     #request를 보내는 함수
@@ -79,7 +82,7 @@ class Tumblr_Crawler(scrapy.Spider):
         pil_img =Image.open(BytesIO(image_request_result.content))
         width, height = pil_img.size
         max_size = [1024, 1024]
-        if width > 200 or height > 200:
+        if width > 1024 or height > 1024:
             pil_img.thumbnail(max_size)
 
         # 얼굴 검출을 위해서 PIL 이미지 객체를 opencv 이미지로 변환
@@ -95,8 +98,14 @@ class Tumblr_Crawler(scrapy.Spider):
         # 얼굴이 검출되지 않을 경우 함수를 종료한다.
         if len(faces)==0:
             return
+        
+        file_path = self.root_dir + self.dirname + '/'
+        full_path = file_path + 'tumblr_' + self.dirname + '_' + str(time.time()) + '.jpg'
 
-        full_path = self.path + str(response.meta['image_num']) + '.jpg'
+        # 이미지를 저장할 폴더가 없을 경우 생성해준다.
+        if not os.path.exists(file_path) :
+            os.makedirs(file_path)
+
         cv2.imwrite(full_path, cv_img)
 
         
