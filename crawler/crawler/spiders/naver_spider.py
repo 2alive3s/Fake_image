@@ -138,7 +138,13 @@ class NewsUrlSpider(scrapy.Spider):
 
         # 이미지를 저장할 폴더가 없을 경우 생성해준다.
         if not os.path.exists(file_path) :
+<<<<<<< HEAD
             os.makedirs(file_path)
             
         print("face ??")
         cv2.imwrite(full_path, cv_img)
+=======
+            os.mkdir(file_path)
+
+        cv2.imwrite(full_path, cv_img)
+>>>>>>> 0d244a60f9683b454f461abfa919ffe127199390
