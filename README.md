@@ -58,4 +58,4 @@ Tumblr : scrapy crawl tumblr -a keyword=노바 -a dirname=nova
 
 Insta : scrapy crawl insta -a keyword=노바 -a dirname=nova
 
-keyword와 dirname 다른 이유 : 파일 경로에 한글이 사용될 수 없으므로 한글 keyword의 경우, 이를 영어로 바꾸어 dirname에 기재해야 한다.
+keyword와 dirname 다른 이유 : 파일 경로에 한글이 사용될 수 없으므로 한글 keyword의 경우 영어로 바꾸어 dirname에 기재해야 한다.
