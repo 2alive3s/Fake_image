@@ -1,10 +1,24 @@
 # Fake_image
 
-Fake image challenge를 위한 code들입니다.
+2018 Fake image challenge를 위한 code들입니다.
 
 김형준, 김유리, 김해중, 신웅비, 양유준, 이동호, 이정훈 supervised by 기계인간
 
 --------------------------------------------------------------------------------------------------------------
+
+환경 설정
+OS : Ubuntu 16.04 LTS
+Python : 3.6.4
+GPU library : CUDA 9.0
+Additional library : pip install -r requirements.txt 명령어를 통해 설치하면 된다.
+
+--------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 Crawler 사용법
 
 Fake_image/crawler/ 경로에서 다음과 같은 명령어를 실행
