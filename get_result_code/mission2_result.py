@@ -229,8 +229,13 @@ for i in range(len(final_result)) :
     if float(cur_result[i]) >= 0.999 :
         final_result[i] = cur_result[i]
 
+# 결과 값 저장할 디렉터리 경로, 만일 없을 시 생성
+output_dir = '../result/'
+if not os.path.exists(output_dir) :
+    os.mkdir(output_dir)
+
 # 결과값 저장할 파일 생성
-mission2_result = open('../result/mission2_result.txt', 'w')
+mission2_result = open(output_dir+'mission2_result.txt', 'w')
 
 for i, id in enumerate(id_list) :
     mission2_result.writelines(id + ',' + final_result[i] + '\n')
