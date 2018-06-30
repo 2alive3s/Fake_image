@@ -119,12 +119,12 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
   
   * 생성된 라벨 파일은 /model_train_code/mission1_labels/ 폴더에 저장된다.
   
- * 임무 2 라벨 파일 생성
-  
+* 임무 2 라벨 파일 생성
+
   * /make_dataset_code/make_mission2_data/ 폴더로 이동
-  
+
   * python make_label.py -r "진짜 얼굴 이미지 저장 디렉토리" -f "합성 얼굴 이미지 디렉토리" 명령어 실행
-  
+
   * 생성된 라벨 파일은 /model_train_code/mission1=2_labels/ 폴더에 저장된다.
  
  
@@ -188,12 +188,12 @@ Fake_image/crawler/ 경로에서 다음과 같은 명령어를 실행
 
 (Flickr는 API KEY를 기재해주어야 실행이 되어 같은 폴더안에 넣어 놓지 않음)
 
-Google : scrapy crawl google -a keyword=노바 -a dirname=nova
+  * Google : scrapy crawl google -a keyword=노바 -a dirname=nova
 
-Naver : scrapy crawl naver -a keyword=노바 -a dirname=nova
+  * Naver : scrapy crawl naver -a keyword=노바 -a dirname=nova
 
-Tumblr : scrapy crawl tumblr -a keyword=노바 -a dirname=nova
+  * Tumblr : scrapy crawl tumblr -a keyword=노바 -a dirname=nova
 
-Insta : scrapy crawl insta -a keyword=노바 -a dirname=nova
+  * Insta : scrapy crawl insta -a keyword=노바 -a dirname=nova
 
-keyword와 dirname 다른 이유 : 파일 경로에 한글이 사용될 수 없으므로 한글 keyword의 경우 영어로 바꾸어 dirname에 기재
+  * keyword와 dirname 다른 이유 : 파일 경로에 한글이 사용될 수 없으므로 한글 keyword의 경우 영어로 바꾸어 dirname에 기재
