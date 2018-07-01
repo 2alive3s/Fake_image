@@ -4,6 +4,9 @@
 
 김형준, 김유리, 김해중, 신웅비, 양유준, 이동호, 이정훈, 정수민, 이다솜 supervised by 기계인간
 
+<br/>
+
+
 프로젝트 소개
 ----------
 
@@ -19,6 +22,8 @@
   
 * 임무 2 AUROC : (현재 미정)
 
+<br/>
+
 
 합성 이미지 탐지 모델 구조
 --------------------
@@ -27,9 +32,13 @@
 
 <img src="./mission1_model.png" width="700" height="300"></img>
 
+<br/>
+
 ### 임무 2
 
 <img src="./mission2_model.png" width="800" height="300"></img>
+
+<br/>
 
 
 환경 설정
@@ -42,6 +51,8 @@ GPU Library : CUDA 9.0
 
 Etc Library : pip install -r requirements.txt 명령어를 통해 설치
 
+<br/>
+
 학습용 데이터 셋 준비
 ----------------
 
@@ -50,6 +61,8 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
 * celebA : https://drive.google.com/drive/folders/0B7EVK8r0v71pWEZsZE9oNnFzTm8
 
 * 직접 수집한 데이터 셋 : https://drive.google.com/open?id=1Z1Xbi0DuDM-NHsCxNKDAQpdgbvvUFHv7
+
+<br/>
 
 #### 원본 이미지 크롭
 
@@ -71,6 +84,8 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
   * python precrop.py -i "celebA 데이터 셋이 저장된 경로" -o "결과 이미지를 저장할 경로" -s 128
 
   * python precrop.py -i "직접 수집한 데이터 셋이 저장된 경로" -o "결과 이미지를 저장할 경로" -s 128
+
+<br/>
 
 
 #### 합성 이미지 생성
@@ -101,7 +116,9 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
   
   * 합성된 이미지는 /dataset/mission2_fake_"합성한 영역 이름" 폴더에 저장된다.
 
-#### 모델 학습용 라벨 파일 생성
+<br/>
+
+#### 라벨 파일 생성
 
 * 원본 이미지 데이터 셋과 합성 이미지 데이터 셋의 정보를 하나의 csv 파일에 기록한다.
 
@@ -125,10 +142,10 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
 
   * 생성된 라벨 파일은 /model_train_code/mission1=2_labels/ 폴더에 저장된다.
  
- 
+<br/>
  
 모델 학습 시키기
-------------
+-------------
 
 * 임무 1 모델 학습
 
@@ -152,9 +169,10 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
   
   * 학습된 모델은 /model_train_code/mission2_checkpoint/ 폴더에 저장
 
+<br/>
 
-결과 도출 하기
-------------
+최종 결과 도출
+-----------
 
 * 임무 1 결과 도출
 
@@ -174,11 +192,13 @@ Etc Library : pip install -r requirements.txt 명령어를 통해 설치
   
   * /result/mission2_result.txt 파일에 결과 저장
   
-* AUROC 점수 계산하기
+* AUROC 점수 계산
 
   * /AUROC/ 폴더로 이동
   
   * python main.py -p "예측 결과 텍스트 파일 경로" -ㅣ "정답 라벨 텍스트 파일 경로"
+  
+<br/>
 
 Crawler 사용법
 ------------
