@@ -142,7 +142,7 @@ model_256_array=[]
 for i in range(1,4) :
     resnet_256 = ResNet(ResidualBlock, [3, 3, 3], input=256)
     resnet_256.cuda()
-    model_path='../mission1_models/mission1_256_'+str(i)+'.pth'
+    model_path='../mission1_final_models/mission1_256_'+str(i)+'.pth'
     resnet_256.load_state_dict(torch.load(model_path))
     model_256_array.append(resnet_256)
 
