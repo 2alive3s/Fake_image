@@ -169,7 +169,7 @@ model_name_array = ['MOUTH_blur_1.pth', 'EYES_blur.pth','LEFT_EYE_blur.pth','LEF
 for model in model_name_array :
     resnet_128 = ResNet(ResidualBlock, [3, 3, 3], input=128)
     resnet_128.cuda()
-    model_path = '../mission2_models/'+model
+    model_path = '../mission2_final_models/'+model
     resnet_128.load_state_dict(torch.load(model_path))
     model_dict.update({model:resnet_128})
 
